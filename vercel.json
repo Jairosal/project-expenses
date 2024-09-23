@@ -1,14 +1,25 @@
 {
-    "builds": [
-      {
-        "src": "expense_tracker/wsgi.py",
-        "use": "@vercel/python"
+  "builds": [
+    {
+      "src": "expense_tracker/expense_tracker/wsgi.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "expense-tracker-front/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "expense-tracker-front/build"
       }
-    ],
-    "routes": [
-      {
-        "src": "/(.*)",
-        "dest": "expense_tracker/wsgi.py"
-      }
-    ]
-  }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "expense_tracker/expense_tracker/wsgi.py"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/expense-tracker-front/$1"
+    }
+  ]
+}
